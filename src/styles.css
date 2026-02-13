@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import "leaflet/dist/leaflet.css";
+
+  html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0F0F0F; /* Asegura que el fondo sea negro desde la raíz */
+  overflow-x: hidden; /* Evita el scroll horizontal no deseado */
+}
+
+* {
+  box-sizing: border-box; /* Ayuda a que el padding no ensanche los contenedores */
+}

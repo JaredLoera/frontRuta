@@ -1,0 +1,217 @@
+
+.home-container {
+  background-color: #0F0F0F;
+  color: #FFFFFF;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 5%;
+  background: rgba(15, 15, 15, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.gold-text {
+  color: #FFD700;
+}
+
+/* Hero Section */
+.hero {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(rgba(33, 33, 33, 0.7), rgba(15,15,15,1)), 
+              url('https://cdn-images.motor.es/image/m/1320w/fotos-diccionario/2023/08//taxi_1693240769.jpg') center/cover;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  max-width: 800px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-bottom: 2.5rem;
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, #B8860B, #FFD700);
+  border: none;
+  padding: 1rem 2.5rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+}
+
+/* Cards Section */
+.info-section {
+  padding: 5rem 5%;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.info-card {
+  background: #1A1A1A;
+  padding: 2.5rem;
+  border-radius: 20px;
+  border: 1px solid #333;
+  transition: border-color 0.3s ease;
+}
+
+.info-card:hover {
+  border-color: #FFD700;
+}
+
+.info-card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.info-card h3 {
+  color: #FFD700;
+  margin-bottom: 1rem;
+}
+
+/* Footer */
+.main-footer {
+  text-align: center;
+
+  border-top: 1px solid #222;
+}
+
+.industry-name {
+  color:#FFD700;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.copyright {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 1rem;
+}
+
+/* Animación simple */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 1.2s ease forwards;
+}
+
+
+
+
+
+
+/* Global styles for the app */
+
+.design-preview {
+  padding: 60px 5%;
+  text-align: center;
+  background-color: #121212; /* Un gris ligeramente distinto para separar secciones */
+}
+
+.design-preview h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.screens-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.screen-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.screen-item span {
+  color: #FFD700;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+/* El "Phone Frame" simula el borde de un celular */
+.phone-frame {
+  width: 240px;
+  height: 480px;
+  border: 8px solid #333;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  background: #000;
+  transition: transform 0.3s ease;
+}
+
+.phone-frame:hover {
+  transform: translateY(-10px);
+  border-color: #FFD700;
+}
+
+.phone-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Esto ajusta tus capturas al tamaño del marco */
+}
+
+/* Responsivo para celulares */
+@media (max-width: 768px) {
+  .phone-frame {
+    width: 180px;
+    height: 360px;
+  }
+}
+
+
+
+
+/*pilares */
+
+/* PILLARS */
+.pillars-section { padding: 80px 5%; text-align: center; }
+.section-title { margin-bottom: 50px; font-size: 2rem; }
+.pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+
+.pillar-card {
+  background: #161616;
+  padding: 40px;
+  border-radius: 15px;
+  border-bottom: 3px solid #B8860B;
+}
+.pillar-card h3 { color: #D4AF37; margin: 15px 0; }
