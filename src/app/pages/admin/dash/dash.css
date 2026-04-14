@@ -30,10 +30,13 @@
   gap: 10px;
 }
 
-.nav-item.active {
-  background: rgba(212, 175, 55, 0.1);
-  color: #D4AF37;
+/* Cuando el enlace está activo, buscamos el nav-item que tiene dentro */
+.active-link .nav-item {
+    background: rgba(212, 175, 55, 0.1); /* El dorado suave que usamos */
+    color: #D4AF37;
+    border-left: 3px solid #D4AF37; /* Opcional: una línea para resaltar */
 }
+
 
 /* Main Content */
 .main-content {
@@ -121,4 +124,109 @@
 /* Arreglo para íconos de Leaflet que a veces desaparecen en Angular */
 .leaflet-pane {
   z-index: 1 !important;
+}
+
+.nav-links{
+  text-decoration: none; 
+  color: white;
+}
+
+.user-profile {
+    position: relative; /* Clave para el posicionamiento del menú */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 12px;
+    transition: background 0.3s;
+}
+
+.user-profile:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.user-text {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.user-name { color: #fff; font-weight: 600; font-size: 0.9rem; }
+.user-role { color: #D4AF37; font-size: 0.7rem; text-transform: uppercase; }
+
+.avatar-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #D4AF37;
+    font-size: 1.8rem;
+}
+
+.arrow-icon {
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+    color: #555;
+}
+
+.arrow-icon.rotate { transform: rotate(180deg); }
+
+/* Estilos del Dropdown */
+.user-dropdown {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    width: 200px;
+    background: #161616;
+    border: 1px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    z-index: 1000;
+    overflow: hidden;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.dropdown-header {
+    padding: 15px;
+    font-size: 0.75rem;
+    color: #555;
+    text-transform: uppercase;
+    border-bottom: 1px solid #222;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: #D4AF37;
+}
+
+.dropdown-item i { width: 16px; font-size: 1rem; }
+
+.dropdown-divider {
+    height: 1px;
+    background: #222;
+    margin: 5px 0;
+}
+
+.logout { color: #ff4d4d !important; }
+.logout:hover { background: rgba(255, 77, 77, 0.1) !important; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

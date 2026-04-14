@@ -1,0 +1,59 @@
+<div class="dashboard-container">
+    <aside class="sidebar">
+        <div class="logo">
+            <span class="gold">TURUTA</span>APP
+        </div>
+        <nav class="sidebar-nav">
+            <a routerLink="/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+                class="nav-links">
+                <div class="nav-item">
+                    <i class="icon">📊</i> <span> Panel Central</span>
+                </div>
+            </a>
+
+            <a routerLink="/dashboard/dealers" routerLinkActive="active-link" class="nav-links">
+                <div class="nav-item">
+                    <i class="icon">🏢</i> <span> Concesionarias</span>
+                </div>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-info">
+                <h1>Gestión de Concesionarias</h1>
+            </div>
+            <div class="user-profile" (click)="toggleUserMenu()">
+                <div class="user-text">
+                    <span class="user-name">{{ user?.email }}</span>
+                    <span class="user-role">Administrador</span>
+                </div>
+
+                <div class="avatar-wrapper">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <i class="fa-solid fa-chevron-down arrow-icon" [class.rotate]="isUserMenuOpen"></i>
+                </div>
+
+                @if(isUserMenuOpen) {
+                <div class="user-dropdown" (click)="$event.stopPropagation()">
+                    <div class="dropdown-header">
+                        <strong>Mi Cuenta</strong>
+                    </div>
+                    <a routerLink="/profile" class="dropdown-item">
+                        <i class="fa-solid fa-user-gear"></i> Perfil
+                    </a>
+                    <a routerLink="/settings" class="dropdown-item">
+                        <i class="fa-solid fa-sliders"></i> Configuración
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item logout" (click)="logout()">
+                        <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                    </button>
+                </div>
+                }
+            </div>
+        </header>
+        <router-outlet></router-outlet>
+    </main>
+</div>

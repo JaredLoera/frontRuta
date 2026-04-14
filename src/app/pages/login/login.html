@@ -1,0 +1,43 @@
+<div class="login-wrapper">
+    <div class="login-card">
+        <div class="login-header">
+            <div class="logo">
+                <span class="gold">TURUTA</span>APP
+            </div>
+            <p>Gestión de Transporte e Infraestructura</p>
+        </div>
+
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+            <div class="form-group">
+                <label>Correo Electrónico</label>
+                <div class="input-container">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="admin@hinojosa.com" formControlName="email" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Contraseña</label>
+                <div class="input-container">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="••••••••" required formControlName="password">
+                </div>
+            </div>
+
+            <div class="form-options">
+                <label class="remember">
+                    <input type="checkbox"> Recordarme
+                </label>
+                <a href="#" class="forgot">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <button type="submit" [disabled]="loginForm.invalid" class="btn-login">
+                INICIAR SESIÓN
+            </button>
+        </form>
+
+        <footer class="login-footer">
+            <p>Desarrollado por <span class="gold">Hinojosa Industries</span></p>
+        </footer>
+    </div>
+</div>

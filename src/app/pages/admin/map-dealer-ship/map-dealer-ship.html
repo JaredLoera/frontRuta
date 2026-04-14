@@ -1,0 +1,31 @@
+<div class="dashboard-grid">
+    <section class="map-section">
+        <div class="section-header">
+            <h3>Mapa de conseciones</h3>
+        </div>
+        <div class="map-container map-placeholder" id="map-container" leaflet [leafletOptions]="options"
+            (leafletMapReady)="onMapReady($event)">
+        </div>
+
+    </section>
+
+    <section class="dealerships-section">
+        <h3>Concesionarias Registradas</h3>
+        <div class="cards-grid">
+            @for (item of dealerships; track $index) {
+
+            <div class="dealership-card">
+                <div class="card-header">
+                    <span class="dealer-name">{{item.dealershipProfile?.companyName}}</span>
+                    <i class="status-icon active"></i>
+                </div>
+                <div class="card-body">
+                    <div class="stat"><span>Unidades:</span> <strong>0</strong></div>
+                </div>
+                <button class="btn-view">Ver Detalles</button>
+            </div>
+            }
+
+        </div>
+    </section>
+</div>
