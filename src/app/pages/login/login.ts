@@ -22,7 +22,8 @@ export class Login {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      role: "ADMIN"
     });
   }
 
@@ -32,24 +33,13 @@ export class Login {
 
       this.authService.login(email, password).subscribe({
         next: (res) => {
-          this.authService.setToken(res.data.token);
-          this.router.navigate(['/dash']);
-          this.authService.getUser().subscribe({
-            next: (userRes) => {
-              this.authService.setUser(userRes.data);
-              this.authService.getProfile().subscribe({
-                next: (profileRes) => {
-                  this.authService.setProfile(profileRes.data);
-                },
-                error: (err) => {
-                  console.error('Error al obtener perfil', err);
-                }
-              });
-            },
-            error: (err) => {
-              console.error('Error al obtener usuario', err);
-            }
-          });
+          this.authService.setToken(res.token);
+          this.authService.setUser(res.user);
+          if (res.user.role === 'ADMIN') {
+            this.router.navigate(['/dashboard']);
+          } else {
+            this.router.navigate(['/dash']);
+          }
         },
         error: (err) => {
           console.error('Error en el login', err);

@@ -1,0 +1,63 @@
+<div class="management-container">
+  <div class="admin-card">
+    <div class="card-header">
+      <h2>Marcas de Vehículos</h2>
+      <div class="quick-add">
+        <input type="text" placeholder="Nueva Marca (ej: Nissan)" #brandInput>
+        <button class="btn-add" (click)="addBrand(brandInput.value); brandInput.value=''">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th class="actions">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="selectable" [class.selected]="selectedBrand === 'Nissan'">
+            <td>Nissan</td>
+            <td class="actions">
+              <button class="btn-icon delete"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <div class="card-header">
+      <h2>Modelos de {{selectedBrand || '...'}}</h2>
+      <div class="quick-add">
+        <input type="text" placeholder="Nuevo Modelo (ej: Tsuru)" #modelInput [disabled]="!selectedBrand">
+        <button class="btn-add" (click)="addModel(modelInput.value); modelInput.value=''" [disabled]="!selectedBrand">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Modelo</th>
+            <th class="actions">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Versa</td>
+            <td class="actions">
+              <button class="btn-icon delete"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -18,9 +18,7 @@ import { Response } from '../../../core/interfaces/response.interface';
 })
 export class Dash  implements OnInit {
 
-  dealerships: User<Profile>[] = [];
-
-  user: User<Profile> | null = null;
+  user: User | null = null;
   profile: Profile | null = null;
 
   constructor(private authService: Auth,private eRef: ElementRef, private userService: UserService) {}
@@ -31,16 +29,7 @@ export class Dash  implements OnInit {
     this.loadDealerships();
   }
   loadDealerships() {
-    this.userService.getDealerShips().subscribe({
-      next: (response: Response<User<Profile>>) => {
-        this.dealerships = response.data ? [response.data] : [];
-        console.log('Dealership', this.dealerships[0]);
-
-      },
-      error: (error) => {
-        console.error('Error fetching dealerships:', error);
-      }
-    });
+ 
   }
   // ... tus otras variables
   isUserMenuOpen = false;

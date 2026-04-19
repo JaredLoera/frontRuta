@@ -10,7 +10,7 @@ import { User as UserService } from '../../../core/services/user/user';
   styleUrl: './dealer-table.css',
 })
 export class DealerTable implements OnInit {
-  dealerships: User<Profile>[] = [];
+  dealerships: User[] = [];
 
   constructor(private userService: UserService) {}
 
@@ -19,13 +19,7 @@ ngOnInit(): void {
   
 }
   loadDealerships() {
-    this.userService.getDealerShips().subscribe({
-      next: (response) => {
-        this.dealerships = response.data ? [response.data].flat() : []; 
-        console.log('Datos recibidos en DealerTable:', this.dealerships);
-      },
-      error: (err) => console.error('Error:', err)
-    });
+    
   }
 
 

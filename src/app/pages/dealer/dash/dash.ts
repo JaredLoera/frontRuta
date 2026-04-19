@@ -19,7 +19,7 @@ import { User as UserService } from '../../../core/services/user/user';
   styleUrl: './dash.css',
 })
 export class Dash {
-    user: User<Profile> | null = null;
+    user: User | null = null;
     profile: Profile | null = null;
     constructor(private authService: Auth,private eRef: ElementRef, private userService: UserService) {
     this.loadMap();

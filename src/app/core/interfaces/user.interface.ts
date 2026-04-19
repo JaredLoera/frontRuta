@@ -1,6 +1,5 @@
-export interface User<T> {
-    id: number;
+export interface User {
+    id:    string;
     email: string;
-    role: number; // 2: Admin, 1: User
-    dealershipProfile?: T;
+    role:  string;
 }

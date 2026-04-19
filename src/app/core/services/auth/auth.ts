@@ -14,8 +14,8 @@ export class Auth {
   private apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
-  login(email: string, password: string): Observable<Response<Token>> {
-    return this.http.post<Response<Token>>(`${this.apiUrl}auth/login`, {
+  login(email: string, password: string): Observable<Token> {
+    return this.http.post<Token>(`${this.apiUrl}auth/signin`, {
       email,
       password,
     });
@@ -29,10 +29,10 @@ export class Auth {
   logout(): void {
     localStorage.removeItem(this.token);
   }
-  setUser(user: User<Profile>): void {
+  setUser(user: User): void {
     localStorage.setItem(environment.storageNames.user, JSON.stringify(user));
   }
-  getUserFromStorage(): User<Profile> | null {
+  getUserFromStorage(): User | null {
     const userJson = localStorage.getItem(environment.storageNames.user);
     return userJson ? JSON.parse(userJson) : null;
   }
@@ -44,10 +44,10 @@ export class Auth {
     return profileJson ? JSON.parse(profileJson) : null;
   }
 
-  getUser(): Observable<Response<User<Profile>>> {
-    return this.http.get<Response<User<Profile>>>(`${this.apiUrl}auth/user`);
+  getUser(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}auth/user`);
   }
-  getProfile(): Observable<Response<Profile>> {
-    return this.http.get<Response<Profile>>(`${this.apiUrl}auth/profile`);
+  getProfile(): Observable<Profile> {
+    return this.http.get<Profile>(`${this.apiUrl}auth/profile`);
   }
 }
