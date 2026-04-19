@@ -1,0 +1,353 @@
+/* --- ESTILOS GENERALES DEL PANEL (TEXTO BLANCO) --- */
+.dashboard-container-fluid {
+    padding: 2rem;
+    color: #ffffff; /* Texto global blanco */
+    font-family: 'Poppins', 'Segoe UI', Roboto, sans-serif;
+    background-color: transparent; /* Hereda el fondo oscuro del padre */
+}
+
+/* --- BARRA DE ACCIONES SUPERIOR --- */
+.action-bar-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid #333;
+    padding-bottom: 1.5rem;
+}
+
+.panel-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+}
+
+.panel-subtitle {
+    color: #aaaaaa;
+    margin: 5px 0 0 0;
+    font-size: 0.95rem;
+}
+
+.btn-gold-add {
+    background-color: #d4af37; /* Dorado Turuta */
+    color: #000000; /* Texto negro para contraste */
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.btn-gold-add:hover {
+    background-color: #f1c40f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+}
+
+/* --- REJILLA DE TARJETAS (ESTILO PANEL) --- */
+.sites-grid-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.site-card-panel {
+    background-color: #1a1a1a; /* Gris casi negro */
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.site-card-panel:hover {
+    border-color: #d4af37;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* --- CABECERA DE LA TARJETA --- */
+.card-header-panel {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.icon-box-gold {
+    background-color: rgba(212, 175, 55, 0.1);
+    color: #d4af37;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.site-info-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.badge-status {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background-color: #333;
+    color: #aaaaaa;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.badge-status.active {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #2ecc71; /* Verde activo */
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+/* --- CUERPO DE LA TARJETA --- */
+.card-body-panel {
+    font-size: 0.9rem;
+    color: #cccccc;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.card-body-panel p {
+    margin: 0.6rem 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.gold-icon {
+    color: #d4af37;
+    width: 16px;
+    text-align: center;
+}
+
+.card-stats-panel {
+    display: flex;
+    justify-content: space-between;
+    background-color: #111;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border: 1px solid #222;
+}
+
+.card-stats-panel span {
+    color: #aaaaaa;
+}
+
+.card-stats-panel strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* --- ACCIONES DE LA TARJETA --- */
+.card-actions-panel {
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #333;
+    padding-top: 1rem;
+}
+
+.btn-panel-action {
+    background: transparent;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-panel-action.edit {
+    flex-grow: 1;
+    border: 1px solid #444;
+    color: #ffffff;
+}
+
+.btn-panel-action.edit:hover {
+    border-color: #d4af37;
+    background-color: rgba(212, 175, 55, 0.05);
+    color: #d4af37;
+}
+
+.btn-panel-action.delete {
+    border: 1px solid #444;
+    color: #e74c3c; /* Rojo */
+    width: 40px;
+}
+
+.btn-panel-action.delete:hover {
+    background-color: rgba(231, 76, 60, 0.1);
+    border-color: #e74c3c;
+}
+
+/* --- MODAL ESTILO PANEL DE CONTROL (OSCURO) --- */
+.modal-panel-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85); /* Fondo muy oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+}
+
+.modal-panel-content {
+    background-color: #1a1a1a; /* Fondo oscuro del modal */
+    color: #ffffff; /* Texto blanco en el modal */
+    width: 90%;
+    max-width: 650px;
+    padding: 2.5rem;
+    border-radius: 20px;
+    border: 1px solid #333;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+.modal-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #333;
+    padding-bottom: 1rem;
+}
+
+.modal-panel-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.close-panel-btn {
+    background: transparent;
+    border: none;
+    color: #aaaaaa;
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-panel-btn:hover { color: #ffffff; }
+
+/* --- FORMULARIO DENTRO DEL MODAL (ESTILO OSCURO) --- */
+.form-grid-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.full-width { grid-column: span 2; }
+
+.form-group-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group-panel label {
+    font-size: 0.85rem;
+    color: #aaaaaa;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group-panel input {
+    background-color: #111; /* Fondo input oscuro */
+    color: #ffffff; /* Texto input blanco */
+    border: 1px solid #333;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.form-group-panel input:focus {
+    border-color: #d4af37;
+    outline: none;
+    background-color: #000;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.form-group-panel input::placeholder { color: #555; }
+
+/* --- ACCIONES DEL MODAL --- */
+.modal-panel-actions {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    border-top: 1px solid #333;
+    padding-top: 1.5rem;
+}
+
+.btn-panel-cancel {
+    background-color: transparent;
+    color: #aaaaaa;
+    border: 1px solid #444;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-panel-cancel:hover {
+    background-color: rgba(255,255,255,0.05);
+    color: #ffffff;
+    border-color: #666;
+}
+
+.btn-panel-save {
+    background-color: #d4af37;
+    color: #000000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-panel-save:hover { background-color: #f1c40f; }
+
+.btn-panel-save:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: #555;
+    color: #888;
+}
+
+/* ANIMACIÓN */
+@keyframes modalSlideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
