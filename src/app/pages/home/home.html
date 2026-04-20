@@ -4,7 +4,16 @@
             <span class="gold-text">TURUTA</span>APP
         </div>
         <div class="nav-links">
-         <i class="fa-solid fa-circle-user fa-2x" ></i>   
+            @if (loggedIn) {
+                <a routerLink="/dashboard" style="color: white; text-decoration: none;">
+                <i class="fa-solid fa-circle-user fa-2x"></i>
+            </a>
+            }
+            @else {
+            <a routerLink="/login" style="color: white; text-decoration: none;">
+                <i class="fa-solid fa-circle-user fa-2x"></i>
+            </a>
+            }
         </div>
     </nav>
 
@@ -36,26 +45,29 @@
         </div>
     </section>
 
-<section id="proyecto" class="pillars-section">
-    <h2 class="section-title">Control y Transparencia Total</h2>
-    <div class="pillars-grid">
-      <div class="pillar-card">
-        <i class="icon">📊</i>
-        <h3>Concesionarias</h3>
-        <p>Control de flotas, registros de mantenimiento preventivo/correctivo y estados de unidades en tiempo real.</p>
-      </div>
-      <div class="pillar-card">
-        <i class="icon">🚕</i>
-        <h3>Conductores</h3>
-        <p>Optimización de rutas mediante mapas de calor y gestión de turnos por kilometraje (entrada/salida).</p>
-      </div>
-      <div class="pillar-card">
-        <i class="icon">📱</i>
-        <h3>Usuarios</h3>
-        <p>Taxímetro digital sincronizado en tiempo real con el conductor, pagos en tarjeta y efectivo para una confianza total.</p>
-      </div>
-    </div>
-  </section>
+    <section id="proyecto" class="pillars-section">
+        <h2 class="section-title">Control y Transparencia Total</h2>
+        <div class="pillars-grid">
+            <div class="pillar-card">
+                <i class="icon">📊</i>
+                <h3>Concesionarias</h3>
+                <p>Control de flotas, registros de mantenimiento preventivo/correctivo y estados de unidades en tiempo
+                    real.</p>
+            </div>
+            <div class="pillar-card">
+                <i class="icon">🚕</i>
+                <h3>Conductores</h3>
+                <p>Optimización de rutas mediante mapas de calor y gestión de turnos por kilometraje (entrada/salida).
+                </p>
+            </div>
+            <div class="pillar-card">
+                <i class="icon">📱</i>
+                <h3>Usuarios</h3>
+                <p>Taxímetro digital sincronizado en tiempo real con el conductor, pagos en tarjeta y efectivo para una
+                    confianza total.</p>
+            </div>
+        </div>
+    </section>
 
     <section class="design-preview">
         <h2 class="gold-text">Interfaz en Desarrollo</h2>

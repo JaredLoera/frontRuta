@@ -15,7 +15,7 @@ export class User {
   constructor(private http: HttpClient) { }
 
 
-  getDealerShips(): Observable<Response<UserInterface<Profile>>> {
-    return this.http.get<Response<UserInterface<Profile>>>(`${this.apiUrl}dealerships`);
-  }
+  // getDealerShips(): Observable<Response<UserInterface<Profile>>> {
+  //   return this.http.get<Response<UserInterface<Profile>>>(`${this.apiUrl}dealerships`);
+  // }
 }

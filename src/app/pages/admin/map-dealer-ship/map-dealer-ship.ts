@@ -14,7 +14,7 @@ import { User as UserService } from '../../../core/services/user/user';
 })
 export class MapDealerShip implements OnInit {
   map!: L.Map;
-  dealerships: User<Profile>[] = [];
+  dealerships: User[] = [];
   constructor(private userService: UserService) { }
 
   ngOnInit() {
@@ -22,19 +22,7 @@ export class MapDealerShip implements OnInit {
   }
 
   loadDealerships() {
-    this.userService.getDealerShips().subscribe({
-      next: (response) => {
-        // Forzamos que sea un array y limpiamos nulos
-        this.dealerships = response.data ? [response.data].flat() : [];
-        console.log('Datos recibidos:', this.dealerships);
-
-        // Si el mapa ya está listo, pintamos
-        if (this.map) {
-          this.renderMarkers();
-        }
-      },
-      error: (err) => console.error('Error:', err)
-    });
+  
   }
 
   options: MapOptions = {
@@ -58,37 +46,37 @@ export class MapDealerShip implements OnInit {
     }, 500);
   }
 private renderMarkers() {
-  if (!this.map || this.dealerships.length === 0) return;
+  // if (!this.map || this.dealerships.length === 0) return;
 
-  // Opcional: Limpiar marcadores anteriores si vas a recargar datos
-  // this.map.eachLayer((layer) => { if (layer instanceof L.Marker) this.map.removeLayer(layer); });
+  // // Opcional: Limpiar marcadores anteriores si vas a recargar datos
+  // // this.map.eachLayer((layer) => { if (layer instanceof L.Marker) this.map.removeLayer(layer); });
 
-  const taxiIcon = L.divIcon({
-    html: '<div style="background-color: #247ad0; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 10px rgba(0,0,0,0.5);"></div>',
-    className: 'custom-taxi-icon',
-    iconSize: [16, 16],
-    iconAnchor: [8, 8]
-  });
+  // const taxiIcon = L.divIcon({
+  //   html: '<div style="background-color: #247ad0; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 10px rgba(0,0,0,0.5);"></div>',
+  //   className: 'custom-taxi-icon',
+  //   iconSize: [16, 16],
+  //   iconAnchor: [8, 8]
+  // });
 
-  const points: L.LatLng[] = [];
+  // const points: L.LatLng[] = [];
 
-  this.dealerships.forEach(dealer => {
-    const lat = Number(dealer.dealershipProfile?.latitude);
-    const lng = Number(dealer.dealershipProfile?.longitude);
+  // this.dealerships.forEach(dealer => {
+  //   const lat = Number(dealer.dealershipProfile?.latitude);
+  //   const lng = Number(dealer.dealershipProfile?.longitude);
 
-    if (!isNaN(lat) && !isNaN(lng)) {
-      const coords = L.latLng(lat, lng);
-      points.push(coords);
+  //   if (!isNaN(lat) && !isNaN(lng)) {
+  //     const coords = L.latLng(lat, lng);
+  //     points.push(coords);
 
-      L.marker(coords, { icon: taxiIcon })
-        .addTo(this.map)
-        .bindPopup(`<b>${dealer.dealershipProfile?.companyName || 'Concesionaria'}</b>`);
-    }
-  });
+  //     L.marker(coords, { icon: taxiIcon })
+  //       .addTo(this.map)
+  //       .bindPopup(`<b>${dealer.dealershipProfile?.companyName || 'Concesionaria'}</b>`);
+  //   }
+  // });
 
-  if (points.length > 0) {
-    const bounds = L.latLngBounds(points);
-    this.map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
-  }
+  // if (points.length > 0) {
+  //   const bounds = L.latLngBounds(points);
+  //   this.map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
+  // }
 }
 }

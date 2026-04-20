@@ -1,12 +1,10 @@
 import { Routes } from '@angular/router';
-import { Home } from './pages/admin/home/home';
+import { Home } from './pages/home/home';
 import { Dash } from './pages/admin/dash/dash';
 import { MapDealerShip } from './pages/admin/map-dealer-ship/map-dealer-ship';
 import { DealerTable } from './pages/admin/dealer-table/dealer-table';
 import { Login } from './pages/login/login';
 import { Dash as dealerDash } from './pages/dealer/dash/dash';
-import { MySites } from './pages/dealer/my-sites/my-sites';
-import { MyUnits } from './pages/dealer/my-units/my-units';
 export const routes: Routes = [
     {
         path: '',
@@ -38,6 +36,10 @@ export const routes: Routes = [
             {
                path:'dealers',
                component: DealerTable
+            },
+            {
+                path: 'vehicles',
+                component: VehiclesModels
             }
         ]
     }
