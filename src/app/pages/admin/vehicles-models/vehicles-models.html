@@ -1,63 +1,176 @@
+<ngx-sonner-toaster position="top-right" richColors closeButton />
 <div class="management-container">
   <div class="admin-card">
     <div class="card-header">
-      <h2>Marcas de Vehículos</h2>
-      <div class="quick-add">
-        <input type="text" placeholder="Nueva Marca (ej: Nissan)" #brandInput>
-        <button class="btn-add" (click)="addBrand(brandInput.value); brandInput.value=''">
+      <div class="title-area">
+        <h2 style="color: aliceblue;">Marcas de Vehículos</h2>
+        <span class="badge">Total: {{ totalMarcas }}</span>
+      </div>
+
+      <div class="quick-add-group">
+        <div class="input-wrapper">
+          <i class="fas fa-car side-icon"></i>
+          <input type="text" placeholder="Ej: Nissan, Ford..." #brandInput
+            (keyup.enter)="addBrand(brandInput.value); brandInput.value=''">
+        </div>
+        <button class="btn-add" (click)="openAddModal()" title="Agregar Marca">
           <i class="fa-solid fa-plus"></i>
         </button>
       </div>
     </div>
-    
+
     <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th class="actions">Acciones</th>
-          </tr>
-        </thead>
+      <table class="modern-table">
         <tbody>
-          <tr class="selectable" [class.selected]="selectedBrand === 'Nissan'">
-            <td>Nissan</td>
+          @for (brand of brands; track brand.id) {
+          <tr class="selectable" [class.selected]="selectedBrand?.id === brand.id" (click)="selectBrand(brand)">
+            <td>
+              <div class="brand-cell"><strong>{{ brand.name }}</strong></div>
+            </td>
             <td class="actions">
-              <button class="btn-icon delete"><i class="fa-solid fa-trash"></i></button>
+              <button class="btn-icon delete" (click)="deleteBrand(brand, $event)">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
             </td>
           </tr>
+          }
         </tbody>
       </table>
     </div>
   </div>
 
   <div class="admin-card">
-    <div class="card-header">
-      <h2>Modelos de {{selectedBrand || '...'}}</h2>
-      <div class="quick-add">
-        <input type="text" placeholder="Nuevo Modelo (ej: Tsuru)" #modelInput [disabled]="!selectedBrand">
-        <button class="btn-add" (click)="addModel(modelInput.value); modelInput.value=''" [disabled]="!selectedBrand">
-          <i class="fa-solid fa-plus"></i>
+    @if (selectedBrand) {
+    <div class="card-header fade-in">
+      <div class="title-area">
+        <h2 style="color: aliceblue;">Modelos de <span class="highlight-text">{{selectedBrand.name}}</span></h2>
+      </div>
+
+      <div class="quick-add-group">
+        <div class="input-wrapper">
+          <i class="fas fa-tag side-icon"></i>
+          <input type="text" placeholder="Ej: Versa, Almera..." #modelInput
+            (keyup.enter)="addModel(modelInput.value); modelInput.value=''">
+        </div>
+        <button class="btn-add" style="width: auto; padding: 0 20px;" (click)="openModelModal()">
+          <i class="fa-solid fa-plus" style="margin-right: 0px;"></i>
         </button>
       </div>
     </div>
 
-    <div class="table-wrapper">
-      <table>
+    <div class="table-wrapper fade-in">
+      <table class="modern-table">
         <thead>
           <tr>
-            <th>Modelo</th>
+            <th>Nombre del Modelo</th>
             <th class="actions">Acciones</th>
           </tr>
         </thead>
         <tbody>
+          @for (model of filteredModels; track model.id) {
           <tr>
-            <td>Versa</td>
+            <td>{{ model.name }}</td>
             <td class="actions">
-              <button class="btn-icon delete"><i class="fa-solid fa-trash"></i></button>
+              <button class="btn-icon delete" (click)="deleteModel(model)">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
             </td>
           </tr>
+          }
         </tbody>
       </table>
     </div>
+    } @else {
+    <div class="empty-state">
+      <div class="empty-icon">
+        <i class="fas fa-hand-pointer"></i>
+      </div>
+      <h3>Selecciona una Marca</h3>
+      <p>Haz clic en una marca de la lista izquierda para gestionar sus modelos.</p>
+    </div>
+    }
   </div>
 </div>
+
+@if (isModalOpen) {
+<div class="modal-overlay" (click)="closeModal()">
+
+  <form class="modal-content fade-in-up" [formGroup]="form" (ngSubmit)="onSubmit()" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h3 style="color: aliceblue;">Registrar Nueva Marca</h3>
+      <button class="btn-close" type="button" (click)="closeModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="brandName" style="color: aliceblue;">Nombre de la Marca <span class="required">*</span></label>
+        <div class="input-wrapper">
+          <i class="fas fa-car side-icon"></i>
+          <input type="text" id="brandName" formControlName="name" required placeholder="Ej: Nissan, Toyota, Ford..."
+            autofocus>
+        </div>
+        <small class="help-text" style="color: aliceblue;">El nombre de la marca es obligatorio.</small>
+        <small class="help-text" style="color: aliceblue;">Ingresa el nombre comercial de la marca.</small>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeModal()" type="button">Cancelar</button>
+      <button class="btn-add" (submit)="onSubmit()">
+        <i class="fa-solid fa-save"></i>
+      </button>
+    </div>
+
+  </form>
+</div>
+}
+
+@if (isModelModalOpen) {
+  <div class="modal-overlay" (click)="closeModelModal()">
+    
+    <form 
+      class="modal-content fade-in-up" 
+      (ngSubmit)="onSubmitModel()" 
+      (click)="$event.stopPropagation()"
+      [formGroup]="formModel"
+    >
+      
+      <div class="modal-header">
+        <h3 style="color: aliceblue;">Registrar Modelo para {{ selectedBrand?.name }}</h3>
+        <button type="button" class="btn-close" (click)="closeModelModal()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="modelName" style="color: aliceblue;">Nombre del Modelo <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <i class="fas fa-tag side-icon"></i>
+            <input 
+              type="text" 
+              id="modelName"
+              name="modelName"
+              formControlName="name"
+              required
+              placeholder="Ej: Versa, Tsuru, March..." 
+              autofocus
+            >
+          </div>
+          <small class="help-text">El modelo quedará vinculado automáticamente a <strong>{{ selectedBrand?.name }}</strong> (ID: {{ selectedBrand?.id }}).</small>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" (click)="closeModelModal()">Cancelar</button>
+        <button type="submit"  class="btn-add" style="width: auto; padding: 0 20px;" [disabled]="newModelName.trim()">
+          <i class="fa-solid fa-save" style="margin-right: 8px;"></i> Guardar Modelo
+        </button>
+      </div>
+
+    </form>
+  </div>
+}

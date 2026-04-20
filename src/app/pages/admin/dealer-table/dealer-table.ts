@@ -14,6 +14,7 @@ import { toast, NgxSonnerToaster } from 'ngx-sonner';
   styleUrl: './dealer-table.css',
 })
 export class DealerTable implements OnInit {
+  
   dealerships: DealerShip[] = [];
   form!: FormGroup;
   Newdelealership: DealerShip | null = null;

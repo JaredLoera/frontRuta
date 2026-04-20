@@ -79,15 +79,14 @@
 </div>
 @if(showModal){
 <div class="modal-overlay" (click)="closeModal()">
-    <form class="premium-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form class="premium-form" [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-content" (click)="$event.stopPropagation()">
 
-        <div class="modal-content" (click)="$event.stopPropagation()">
             <header class="modal-header">
                 <div class="header-title">
                     <i class="fas fa-building gold"></i>
                     <h3>{{modalTitle}}</h3>
                 </div>
-                <button class="close-x" (click)="closeModal()">×</button>
+                <button class="close-x" type="button" (click)="closeModal()">×</button>
             </header>
 
             <div class="modal-body">
@@ -142,13 +141,12 @@
             </div>
 
             <footer class="modal-footer">
-                <button class="btn-cancel" (click)="closeModal()">Descartar</button>
+                <button class="btn-cancel" type="button" (click)="closeModal()">Descartar</button>
                 <button class="btn-save" type="submit" [disabled]="form.invalid">
                     <i class="fas fa-check"></i> Registrar Dealer
                 </button>
 
             </footer>
-        </div>
     </form>
 
 </div>
