@@ -5,6 +5,10 @@ import { MapDealerShip } from './pages/admin/map-dealer-ship/map-dealer-ship';
 import { DealerTable } from './pages/admin/dealer-table/dealer-table';
 import { Login } from './pages/login/login';
 import { Dash as dealerDash } from './pages/dealer/dash/dash';
+import { MySites } from './pages/dealer/my-sites/my-sites';
+import { MyUnits } from './pages/dealer/my-units/my-units';
+import { VehiclesModels } from './pages/admin/vehicles-models/vehicles-models';
+import { MyDrivers } from './pages/dealer/my-drivers/my-drivers';
 export const routes: Routes = [
     {
         path: '',
@@ -24,6 +28,10 @@ export const routes: Routes = [
     {
         path: 'my-units',
         component: MyUnits
+    },
+    {
+        path: 'my-drivers',
+        component: MyDrivers
     },
     {
         path: 'dashboard',
