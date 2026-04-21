@@ -5,7 +5,6 @@ import { MapDealerShip } from './pages/admin/map-dealer-ship/map-dealer-ship';
 import { DealerTable } from './pages/admin/dealer-table/dealer-table';
 import { Login } from './pages/login/login';
 import { Dash as dealerDash } from './pages/dealer/dash/dash';
-import { VehiclesModels } from './pages/admin/vehicles-models/vehicles-models';
 export const routes: Routes = [
     {
         path: '',
@@ -15,8 +14,16 @@ export const routes: Routes = [
         component: dealerDash
     },
     {
+        path: 'my-sites',
+        component: MySites
+    },
+    {
         path: 'login',
         component: Login
+    },
+    {
+        path: 'my-units',
+        component: MyUnits
     },
     {
         path: 'dashboard',
