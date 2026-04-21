@@ -43,15 +43,22 @@
 .unit-card:hover { border-color: #d4af37; }
 
 .unit-image-container {
-    position: relative;
-    height: 160px;
-    background: #111;
+    width: 100%;
+    height: 180px; /* Ajusta esta altura según el diseño de tu tarjeta */
+    overflow: hidden; /* Oculta cualquier parte de la imagen que sobresalga */
+    background-color: #222; /* Un fondo oscuro por si la imagen tarda en cargar o es PNG transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px 8px 0 0; /* Opcional: para redondear las esquinas superiores de la tarjeta */
 }
 
+/* 2. Hacer que la imagen se adapte */
 .unit-image-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit:scale-down; /* <-- ESTA ES LA CLAVE */
+    object-position: center; /* Centra la imagen para que no corte cabezas/llantas */
 }
 
 .status-badge {
@@ -219,5 +226,61 @@
     border: none;
     color: white;
     font-size: 2rem;
+    cursor: pointer;
+}
+/* --- 1. SOLUCIÓN AL SCROLL --- */
+/* Para que el form use flexbox y pase la restricción de altura al contenedor del scroll */
+.unit-form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0; /* Regla vital de flexbox para permitir scroll interno */
+}
+
+/* --- 2. ESTILOS DEL COLOR PICKER --- */
+.color-picker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #000;
+    border: 1px solid #444;
+    padding: 5px 15px 5px 5px;
+    border-radius: 8px;
+}
+
+.color-input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.color-input::-webkit-color-swatch-wrapper { padding: 0; }
+.color-input::-webkit-color-swatch { border: none; border-radius: 6px; }
+
+/* --- 3. ESTILOS DEL CHECKBOX (Atención Especial) --- */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.toggle-container input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #d4af37; /* Pinta el checkbox del color de tu tema */
     cursor: pointer;
 }

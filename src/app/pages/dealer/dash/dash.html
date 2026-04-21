@@ -11,25 +11,26 @@
                         <i class="icon">📊</i> <span> Panel Central</span>
                     </div>
                 </a>
-
-                <a routerLink="/dash/dealers" routerLinkActive="active-link" class="nav-links">
-                    <div class="nav-item">
-                        <i class="icon">🏢</i> <span> Mis sitios</span>
-                    </div>
-                </a>
-
-                <a routerLink="/dash/fleet" routerLinkActive="active-link" class="nav-links">
+                <a  class="nav-links" routerLink="/dash/flota" routerLinkActive="active-link">
                     <div class="nav-item">
                         <i class="icon">🚕</i> <span> Mi Flota</span>
                     </div>
                 </a>
-                <a routerLink="/dash/maintenance" routerLinkActive="active-link" class="nav-links">
-                    <div class="nav-item">
+
+                <a class="nav-links disabled-link">
+                    <div class="nav-item" style="color: #353534;">
+                        <i class="icon">🏢</i> <span> Mis sitios</span>
+                    </div>
+                </a>
+
+
+                <a class="nav-links disabled-link">
+                    <div class="nav-item" style="color: #353534;">
                         <i class="icon">🛠️</i> <span> Mantenimiento</span>
                     </div>
                 </a>
-                <a routerLink="/dash/choferes" routerLinkActive="active-link" class="nav-links">
-                    <div class="nav-item">
+                <a class="nav-links disabled-link">
+                    <div class="nav-item" style="color: #353534;">
                         <i class="icon">👨‍💼</i> <span> Choferes</span>
                     </div>
                 </a>
@@ -39,79 +40,6 @@
     </aside>
 
     <main class="main-content">
-        <header class="top-header">
-            <div class="header-info">
-                <h1>Gestión de Concesionarias</h1>
-            </div>
-            <div class="user-profile" (click)="toggleUserMenu()">
-                <div class="user-text">
-                    <span class="user-name">{{ user?.email }}</span>
-                    <span class="user-role">concesión</span>
-                </div>
-
-                <div class="avatar-wrapper">
-                    <i class="fa-solid fa-circle-user"></i>
-                    <i class="fa-solid fa-chevron-down arrow-icon" [class.rotate]="isUserMenuOpen"></i>
-                </div>
-
-                @if(isUserMenuOpen) {
-                <div class="user-dropdown" (click)="$event.stopPropagation()">
-                    <div class="dropdown-header">
-                        <strong>Mi Cuenta</strong>
-                    </div>
-                    <a routerLink="/profile" class="dropdown-item">
-                        <i class="fa-solid fa-user-gear"></i> Perfil
-                    </a>
-                    <a routerLink="/settings" class="dropdown-item">
-                        <i class="fa-solid fa-sliders"></i> Configuración
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <button class="dropdown-item logout" (click)="logout()">
-                        <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
-                    </button>
-                </div>
-                }
-            </div>
-        </header>
-
-
-        <div class="dashboard-body">
-            <section class="live-map-section">
-                <div id="map-container" class="main-map"></div>
-            </section>
-
-            <div class="quick-stats">
-                <div class="stat-card">
-                    <span class="label">Unidades Activas</span>
-                    <span class="value">N/A</span>
-                </div>
-                <div class="stat-card">
-                    <span class="label">Alertas Técnicas</span>
-                    <span class="value danger-text">N/A</span>
-                </div>
-                <div class="stat-card">
-                    <span class="label">Balance Mensual</span>
-                    <span class="value gold-text">N/A</span>
-                </div>
-            </div>
-
-            <div class="info-grid">
-                <div class="status-card">
-                    <h3><i class="fas fa-tools"></i> Mantenimientos Próximos</h3>
-                    <div class="list">
-                        <div class="item warn">N/A</div>
-                        <div class="item crit">N/A</div>
-                    </div>
-                </div>
-                <div class="status-card">
-                    <h3><i class="fas fa-user-check"></i> Choferes en Turno</h3>
-                    <div class="list">
-                        <div class="item">N/A</div>
-                        <div class="item">N/A</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+          <router-outlet></router-outlet>
     </main>
 </div>
