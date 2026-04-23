@@ -1,0 +1,73 @@
+<header class="top-header">
+    <div class="header-info">
+        <h1>Gestión de Concesionarias</h1>
+    </div>
+    <div class="user-profile" (click)="toggleUserMenu()">
+        <div class="user-text">
+            <span class="user-name">{{ user?.email }}</span>
+            <span class="user-role">concesión</span>
+        </div>
+
+        <div class="avatar-wrapper">
+            <i class="fa-solid fa-circle-user"></i>
+            <i class="fa-solid fa-chevron-down arrow-icon" [class.rotate]="isUserMenuOpen"></i>
+        </div>
+
+        @if(isUserMenuOpen) {
+        <div class="user-dropdown" (click)="$event.stopPropagation()">
+            <div class="dropdown-header">
+                <strong>Mi Cuenta</strong>
+            </div>
+            <button routerLink="/profile" class="dropdown-item" style="color: #353534;">
+                <i class="fa-solid fa-user-gear"></i> Perfil
+            </button>
+            <button disabled routerLink="/settings" class="dropdown-item" style="color: #353534;">
+                <i class="fa-solid fa-sliders"></i> Configuración
+            </button>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item logout" (click)="logout()">
+                <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+            </button>
+        </div>
+        }
+    </div>
+</header>
+
+
+<div class="dashboard-body">
+    <section class="live-map-section">
+        <div id="map-container" class="main-map"></div>
+    </section>
+
+    <div class="quick-stats">
+        <div class="stat-card">
+            <span class="label">Unidades Activas</span>
+            <span class="value">N/A</span>
+        </div>
+        <div class="stat-card">
+            <span class="label">Alertas Técnicas</span>
+            <span class="value danger-text">N/A</span>
+        </div>
+        <div class="stat-card">
+            <span class="label">Balance Mensual</span>
+            <span class="value gold-text">N/A</span>
+        </div>
+    </div>
+
+    <div class="info-grid">
+        <div class="status-card">
+            <h3><i class="fas fa-tools"></i> Mantenimientos Próximos</h3>
+            <div class="list">
+                <div class="item warn">N/A</div>
+                <div class="item crit">N/A</div>
+            </div>
+        </div>
+        <div class="status-card">
+            <h3><i class="fas fa-user-check"></i> Choferes en Turno</h3>
+            <div class="list">
+                <div class="item">N/A</div>
+                <div class="item">N/A</div>
+            </div>
+        </div>
+    </div>
+</div>

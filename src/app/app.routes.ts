@@ -9,29 +9,33 @@ import { MySites } from './pages/dealer/my-sites/my-sites';
 import { MyUnits } from './pages/dealer/my-units/my-units';
 import { VehiclesModels } from './pages/admin/vehicles-models/vehicles-models';
 import { MyDrivers } from './pages/dealer/my-drivers/my-drivers';
+import { Main } from './pages/dealer/main/main';
 export const routes: Routes = [
     {
         path: '',
         component: Home
-    },{
+    }, {
         path: 'dash',
-        component: dealerDash
+        component: dealerDash,
+        children: [
+            {
+                path: '',
+                component: Main
+            },
+            {
+                path: 'my-sites',
+                component: MySites
+            },
+            {
+                path: 'flota',
+                component: MyUnits
+            }
+        ]
     },
-    {
-        path: 'my-sites',
-        component: MySites
-    },
+
     {
         path: 'login',
         component: Login
-    },
-    {
-        path: 'my-units',
-        component: MyUnits
-    },
-    {
-        path: 'my-drivers',
-        component: MyDrivers
     },
     {
         path: 'dashboard',
@@ -42,8 +46,8 @@ export const routes: Routes = [
                 component: MapDealerShip
             },
             {
-               path:'dealers',
-               component: DealerTable
+                path: 'dealers',
+                component: DealerTable
             },
             {
                 path: 'vehicles',
