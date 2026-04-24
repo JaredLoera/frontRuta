@@ -7,8 +7,9 @@ import { Login } from './pages/login/login';
 import { Dash as dealerDash } from './pages/dealer/dash/dash';
 import { MySites } from './pages/dealer/my-sites/my-sites';
 import { MyUnits } from './pages/dealer/my-units/my-units';
-import { Main } from './pages/dealer/main/main';
 import { VehiclesModels } from './pages/admin/vehicles-models/vehicles-models';
+import { MyDrivers } from './pages/dealer/my-drivers/my-drivers';
+import { Main } from './pages/dealer/main/main';
 export const routes: Routes = [
     {
         path: '',
