@@ -46,18 +46,34 @@ export class DealerTable implements OnInit {
     });
   }
 
+  get f() { return this.form.controls; }
 
   onSubmit() {
-    // 1. Verificación manual por si acaso
-    console.log('Formulario válido:', this.form.valid);
-    console.log('Valores del formulario:', this.form.value);
-
     if (this.form.invalid) {
-      this.form.markAllAsTouched(); // Marca campos para mostrar errores visuales
-      toast.error('Por favor, rellena todos los campos obligatorios');
+      this.form.markAllAsTouched(); // Para que se pinten los bordes rojos en el UI
+
+      // 1. Buscamos el primer error para mostrar un mensaje claro
+      const firstInvalidField = Object.keys(this.form.controls).find(key => this.form.get(key)?.invalid);
+
+      if (firstInvalidField) {
+        const control = this.form.get(firstInvalidField);
+        let message = `Error en el campo ${firstInvalidField}`;
+
+        // 2. Personalizamos el mensaje según el tipo de error
+        if (control?.errors?.['required']) {
+          message = `El campo "${this.getFriendlyName(firstInvalidField)}" es obligatorio.`;
+        } else if (control?.errors?.['pattern']) {
+          message = `Formato incorrecto en "${this.getFriendlyName(firstInvalidField)}". Ejemplo: AB-1234-5678`;
+        } else if (control?.errors?.['email']) {
+          message = `El correo electrónico no es válido.`;
+        }
+
+        toast.error('Campos pendientes', {
+          description: message,
+        });
+      }
       return;
     }
-
     this.Newdelealership = {
       name: this.form.value.name,
       businessName: this.form.value.businessName,
@@ -73,7 +89,7 @@ export class DealerTable implements OnInit {
         console.log('Concesionaria creada:', res);
         this.loadDealerships();
         this.closeModal();
-        this.form.reset(); // Limpia el formulario para la próxima vez
+        this.form.reset(); // PARA LIMPAIR EL FORMU
 
         setTimeout(() => {
           const email = res.ownerEmail;
@@ -117,6 +133,20 @@ export class DealerTable implements OnInit {
         });
       }
     });
+  }
+
+  // 3. Función auxiliar para nombres amigables (opcional)
+  getFriendlyName(key: string): string {
+    const names: { [key: string]: string } = {
+      email: 'Email',
+      name: 'Nombre de la Base',
+      businessName: 'Nombre de la Empresa',
+      taxId: 'Tax ID',
+      address: 'Dirección',
+      phone: 'Teléfono',
+      concessionNumber: 'Número de Concesión'
+    };
+    return names[key] || key;
   }
 
   showModal = false;
