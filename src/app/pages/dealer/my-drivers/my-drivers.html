@@ -5,8 +5,8 @@
             <p class="panel-subtitle">Visualiza, agrega y edita los operadores registrados.</p>
         </div>
         <button class="btn-gold-add" (click)="openAddModal()">
-    <i class="fas fa-plus-circle"></i> NUEVO CHOFER
-</button>
+            <i class="fas fa-plus-circle"></i> NUEVO CHOFER
+        </button>
     </header>
 
     <div class="sites-grid-panel">
@@ -31,13 +31,13 @@
             </div>
 
             <div class="card-actions-panel">
-    <button class="btn-panel-action" (click)="editarChofer(chofer)">
-        <i class="fas fa-user-edit"></i> Editar Perfil
-    </button>
-    <button class="btn-panel-action delete" (click)="eliminarChofer(chofer.id)">
-        <i class="fas fa-trash-alt"></i>
-    </button>
-</div>
+                <button class="btn-panel-action" (click)="editarChofer(chofer)">
+                    <i class="fas fa-user-edit"></i> Editar Perfil
+                </button>
+                <button class="btn-panel-action delete" (click)="eliminarChofer(chofer.id)">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
         </div>
         }
     </div>
@@ -46,7 +46,8 @@
     <div class="modal-panel-overlay" (click)="closeModal()">
         <div class="modal-panel-content" (click)="$event.stopPropagation()">
             <div class="modal-panel-header">
-                <h3><i class="fas fa-user-circle gold-icon"></i> {{ choferForm.get('id')?.value ? 'Modificar' : 'Registrar' }} Chofer</h3>
+                <h3><i class="fas fa-user-circle gold-icon"></i> {{ choferForm.get('id')?.value ? 'Modificar' :
+                    'Registrar' }} Chofer</h3>
                 <button class="close-panel-btn" (click)="closeModal()">&times;</button>
             </div>
 
@@ -55,19 +56,22 @@
                     <div class="form-group-panel"><label>Nombre</label><input formControlName="nombre"></div>
                     <div class="form-group-panel"><label>Apellidos</label><input formControlName="lastName"></div>
                     <div class="form-group-panel"><label>Email</label><input formControlName="email" type="email"></div>
-                    <div class="form-group-panel"><label>Password</label><input formControlName="password" type="password"></div>
+                    <div class="form-group-panel"><label>Password</label><input formControlName="password"
+                            type="password"></div>
                     <div class="form-group-panel"><label>Rol</label><input formControlName="role"></div>
-                    <div class="form-group-panel"><label>Unidad (Carro ID)</label><input formControlName="carroId"></div>
+                    <div class="form-group-panel"><label>Unidad (Carro ID)</label><input formControlName="carroId">
+                    </div>
                     <div class="form-group-panel"><label>No. Licencia</label><input formControlName="license"></div>
-                    <div class="form-group-panel"><label>Expiración</label><input formControlName="licenseExpiry" type="date"></div>
+                    <div class="form-group-panel"><label>Expiración</label><input formControlName="licenseExpiry"
+                            type="date"></div>
                 </div>
 
                 <div class="modal-panel-actions">
-    <button type="button" class="btn-modal-cancel" (click)="closeModal()">Cancelar</button>
-    <button type="submit" class="btn-modal-save" [disabled]="choferForm.invalid">
-        <i class="fas fa-save"></i> Guardar Chofer
-    </button>
-</div>
+                    <button type="button" class="btn-modal-cancel" (click)="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn-modal-save" [disabled]="choferForm.invalid">
+                        <i class="fas fa-save"></i> Guardar Chofer
+                    </button>
+                </div>
             </form>
         </div>
     </div>
