@@ -21,8 +21,10 @@ export class Login {
     private authService: Auth,
     private router: Router
   ) {
+    //al parecer validator.email no funciona con la ñ, asi que mejor un regex personalizado jajaja
+    const emailRegex = /^[a-zA-Z0-9._%+-ñÑ]+@[a-zA-Z0-9.-ñÑ]+\.[a-zA-Z]{2,}$/;
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(emailRegex)]],
       password: ['', Validators.required]
     });
   }
