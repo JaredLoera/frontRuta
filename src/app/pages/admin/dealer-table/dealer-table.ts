@@ -13,11 +13,13 @@ import { toast, NgxSonnerToaster } from 'ngx-sonner';
   styleUrl: './dealer-table.css',
 })
 export class DealerTable implements OnInit {
-
+  editingDealerId: string | null = null; // Para guardar el ID del dealer que se edita
   dealerships: DealerShip[] = [];
   form!: FormGroup;
   Newdelealership: DealerShip | null = null;
-
+  showModal = false;
+  modalTitle = '';
+  isEditing = false;
 
   constructor(private fb: FormBuilder, private dealershipService: Dealershipservice, private cdr: ChangeDetectorRef) {
     this.form = this.fb.group({
@@ -149,11 +151,16 @@ export class DealerTable implements OnInit {
     return names[key] || key;
   }
 
-  showModal = false;
-  modalTitle = '';
 
   openAddModal() {
+    this.isEditing = false;
+    this.editingDealerId = null;
     this.modalTitle = 'Registrar Nueva Concesionaria';
+    this.form.reset();
+
+    // Habilitar el email para nuevos registros
+    this.form.get('email')?.enable();
+
     this.showModal = true;
   }
 
@@ -167,10 +174,24 @@ export class DealerTable implements OnInit {
     dealer.activo = !dealer.activo;
   }
 
-  editDealer(dealer: any) {
-    this.modalTitle = `Editando: ${dealer.nombreComercial}`;
+  editDealer(dealer: DealerShip) {
+    this.isEditing = true;
+    this.editingDealerId = dealer.id || null; // Asegúrate de que tu interfaz tenga 'id'
+    this.modalTitle = `Editando: ${dealer.name}`;
+
+    // Rellenamos el formulario con los datos actuales
+    this.form.patchValue({
+      email: dealer.ownerEmail,
+      name: dealer.name,
+      businessName: dealer.businessName,
+      taxId: dealer.taxId,
+      address: dealer.address,
+      phone: dealer.phone,
+      concessionNumber: dealer.concessionNumber
+    });
+    // 2. Bloqueamos el campo de email solo en edición
+    this.form.get('email')?.disable();
     this.showModal = true;
-    // Aquí cargarías los datos en un FormGroup
   }
 
   closeModal() {

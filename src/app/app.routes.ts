@@ -30,6 +30,11 @@ export const routes: Routes = [
                 path: 'flota',
                 component: MyUnits
             }
+            ,
+            {
+                path: 'my-drivers',
+                component: MyDrivers
+            },
         ]
     },
 

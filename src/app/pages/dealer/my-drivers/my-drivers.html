@@ -1,11 +1,11 @@
 <div class="dashboard-container-fluid">
     <header class="action-bar-panel">
         <div class="titles">
-            <h1 class="panel-title">Gestión de Choferes</h1>
-            <p class="panel-subtitle">Visualiza, agrega y edita los operadores registrados.</p>
+            <h1 class="panel-title">Registro de Licencias</h1>
+            <p class="panel-subtitle">Registra licencias para generar credenciales de acceso a nuevos choferes.</p>
         </div>
         <button class="btn-gold-add" (click)="openAddModal()">
-            <i class="fas fa-plus-circle"></i> NUEVO CHOFER
+            <i class="fas fa-id-card"></i> REGISTRAR LICENCIA
         </button>
     </header>
 
@@ -13,26 +13,26 @@
         @for (chofer of choferes; track chofer.id) {
         <div class="site-card-panel">
             <div class="card-header-panel">
-                <div class="icon-box-gold"><i class="fas fa-id-card"></i></div>
+                <div class="icon-box-gold"><i class="fas fa-file-contract"></i></div>
                 <div class="site-info-header">
-                    <h3>{{ chofer.nombre }} {{ chofer.lastName }}</h3>
-                    <span class="badge-status active">ACTIVO</span>
+                    <h3>Licencia: {{ chofer.licenseNumber }}</h3>
+                    <span class="badge-status" [class.active]="chofer.status.includes('Pendiente')">
+                        {{ chofer.status }}
+                    </span>
                 </div>
             </div>
 
             <div class="card-body-panel">
-                <p><i class="fas fa-envelope gold-icon"></i> {{ chofer.email }}</p>
-                <p><i class="fas fa-star gold-icon"></i> Rol: {{ chofer.role }}</p>
-                <p><i class="fas fa-car gold-icon"></i> Unidad: {{ chofer.carroId }}</p>
+                <p><i class="fas fa-calendar-alt gold-icon"></i> Vence: <strong>{{ chofer.licenseExpiry }}</strong></p>
+                <p><i class="fas fa-user-tie gold-icon"></i> Concesionaria ID: <small>{{ currentConcessionaireId }}</small></p>
                 <div class="card-stats-panel">
-                    <span>Licencia: <strong>{{ chofer.license }}</strong></span>
-                    <span>Vence: <strong>{{ chofer.licenseExpiry }}</strong></span>
+                    <span>Una vez registrado, el chofer podrá completar sus datos personales desde la App.</span>
                 </div>
             </div>
 
             <div class="card-actions-panel">
                 <button class="btn-panel-action" (click)="editarChofer(chofer)">
-                    <i class="fas fa-user-edit"></i> Editar Perfil
+                    <i class="fas fa-edit"></i> Editar
                 </button>
                 <button class="btn-panel-action delete" (click)="eliminarChofer(chofer.id)">
                     <i class="fas fa-trash-alt"></i>
@@ -46,30 +46,41 @@
     <div class="modal-panel-overlay" (click)="closeModal()">
         <div class="modal-panel-content" (click)="$event.stopPropagation()">
             <div class="modal-panel-header">
-                <h3><i class="fas fa-user-circle gold-icon"></i> {{ choferForm.get('id')?.value ? 'Modificar' :
-                    'Registrar' }} Chofer</h3>
+                <h3>
+                    <i class="fas fa-id-card gold-icon"></i> 
+                    {{ licenseForm.get('id')?.value ? 'Modificar' : 'Registrar Nueva' }} Licencia
+                </h3>
                 <button class="close-panel-btn" (click)="closeModal()">&times;</button>
             </div>
 
-            <form [formGroup]="choferForm" (ngSubmit)="onSubmit()">
-                <div class="form-grid-panel">
-                    <div class="form-group-panel"><label>Nombre</label><input formControlName="nombre"></div>
-                    <div class="form-group-panel"><label>Apellidos</label><input formControlName="lastName"></div>
-                    <div class="form-group-panel"><label>Email</label><input formControlName="email" type="email"></div>
-                    <div class="form-group-panel"><label>Password</label><input formControlName="password"
-                            type="password"></div>
-                    <div class="form-group-panel"><label>Rol</label><input formControlName="role"></div>
-                    <div class="form-group-panel"><label>Unidad (Carro ID)</label><input formControlName="carroId">
+            <form [formGroup]="licenseForm" (ngSubmit)="onSubmit()">
+                <div class="form-grid-panel" style="grid-template-columns: 1fr;">
+                    <div class="form-group-panel">
+                        <label>ID de Concesionaria (Automático)</label>
+                        <input formControlName="concessionaireId" readonly style="background: #f0f0f0;">
                     </div>
-                    <div class="form-group-panel"><label>No. Licencia</label><input formControlName="license"></div>
-                    <div class="form-group-panel"><label>Expiración</label><input formControlName="licenseExpiry"
-                            type="date"></div>
+
+                    <div class="form-group-panel">
+                        <label>Número de Licencia</label>
+                        <input formControlName="licenseNumber" placeholder="Ej. TR-1234567">
+                        <small *ngIf="licenseForm.get('licenseNumber')?.touched && licenseForm.get('licenseNumber')?.invalid" style="color: red;">
+                            El número de licencia es obligatorio.
+                        </small>
+                    </div>
+
+                    <div class="form-group-panel">
+                        <label>Fecha de Expiración</label>
+                        <input formControlName="licenseExpiry" type="date">
+                        <small *ngIf="licenseForm.get('licenseExpiry')?.touched && licenseForm.get('licenseExpiry')?.invalid" style="color: red;">
+                            La fecha es obligatoria.
+                        </small>
+                    </div>
                 </div>
 
                 <div class="modal-panel-actions">
                     <button type="button" class="btn-modal-cancel" (click)="closeModal()">Cancelar</button>
-                    <button type="submit" class="btn-modal-save" [disabled]="choferForm.invalid">
-                        <i class="fas fa-save"></i> Guardar Chofer
+                    <button type="submit" class="btn-modal-save" [disabled]="licenseForm.invalid">
+                        <i class="fas fa-paper-plane"></i> Generar Credenciales
                     </button>
                 </div>
             </form>
