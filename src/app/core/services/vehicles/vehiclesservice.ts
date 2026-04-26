@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 import { Brand } from '../../interfaces/brands.interface';
 import { Models } from '../../interfaces/models.interface';
 import { Vehicle } from '../../interfaces/vehicle.interface';
+import { Driver } from '../../interfaces/drivers.interface';
+import { Response } from '../../interfaces/response.interface';
+import { assings } from '../../interfaces/assing.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -30,4 +33,16 @@ export class Vehiclesservice {
   createVehicle(vehicle: Vehicle): Observable<Vehicle> {
     return this.http.post<Vehicle>(`${this.apiUrl}vehicles`, vehicle);
   }
+  createDriver(driver:Driver):Observable<Response>{
+     return this.http.post<Response>(`${this.apiUrl}drivers`, driver);
+  }
+  getDriver(id:string):Observable<Driver[]>{
+    return this.http.get<Driver[]>(`${this.apiUrl}drivers?concessionaireId=${id}`);
+  }
+  assing(assing:assings){
+    return this.http.post(`${this.apiUrl}vehicles/assign`, assing);
+
+  }
+
+
 }

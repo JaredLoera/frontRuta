@@ -1,5 +1,6 @@
-export interface Response<T> {
-    code: number;
-    message: string;
-    data: T;
+import { Credentials } from "./credentials.interface";
+import { Driver } from "./drivers.interface";
+export interface Response {
+    credentials: Credentials;
+    driver: Driver;
 }

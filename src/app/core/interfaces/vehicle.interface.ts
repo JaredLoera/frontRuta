@@ -7,4 +7,6 @@ export interface Vehicle {
     modelId:          string;
     concessionaireId: string;
     imagen?:          string;
+    model?:           string;
+    brand?:           string;
 }

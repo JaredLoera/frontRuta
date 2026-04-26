@@ -22,13 +22,13 @@ import { User } from '../../../core/interfaces/user.interface';
 export class MyUnits {
   user: User | null = null;
   showModal = false;
-  currentConcessionaireId = this.user?.concessionaireId!; // Asumiendo que el ID de la concesionaria es el mismo que el del usuario
+  currentConcessionaireId = this.user?.concessionaireId!; 
   unidadForm!: FormGroup;
   // Listas de datos
   unidades: Vehicle[] = [];
   brands: Brand[] = [];
   allModels: Models[] = [];
-  filteredModels: Models[] = []; // Modelos filtrados por la marca seleccionada
+  filteredModels: Models[] = []; 
 
 
   constructor(private fb: FormBuilder, private vehiclesService: Vehiclesservice,
@@ -39,17 +39,17 @@ export class MyUnits {
     this.initForm();
     this.loadInitialData();
 
-    // LÓGICA DEL FILTRO: Escuchar cambios en el selector de Marca
+ 
     this.unidadForm.get('brandId')?.valueChanges.subscribe(selectedBrandId => {
       if (selectedBrandId) {
-        // Filtrar modelos que pertenezcan a la marca
+
         this.filteredModels = this.allModels.filter(m => m.brandId === selectedBrandId);
-        this.unidadForm.get('modelId')?.enable(); // Habilitar select de modelo
+        this.unidadForm.get('modelId')?.enable(); 
       } else {
         this.filteredModels = [];
-        this.unidadForm.get('modelId')?.disable(); // Deshabilitar si no hay marca
+        this.unidadForm.get('modelId')?.disable();
       }
-      // Reiniciar el valor del modelo al cambiar de marca
+
       this.unidadForm.get('modelId')?.setValue('');
     });
   }
@@ -123,8 +123,6 @@ export class MyUnits {
       modelId: formValues.modelId,
       concessionaireId: this.user?.concessionaireId! // Tu ID de concesionaria
     };
-
-    console.log('Enviando a NestJS:', payload);
     
     this.vehiclesService.createVehicle(payload).subscribe({
       next: (res) => {

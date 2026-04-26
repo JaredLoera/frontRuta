@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Vehiclesservice } from '../../../core/services/vehicles/vehiclesservice';
+import { toast, NgxSonnerToaster } from 'ngx-sonner';
+import { Driver } from '../../../core/interfaces/drivers.interface';
+import { environment } from '../../../../environments/environment';
+import { ChangeDetectorRef } from '@angular/core';
+import { Vehicle } from '../../../core/interfaces/vehicle.interface';
+import { assings } from '../../../core/interfaces/assing.interface';
 
 @Component({
   selector: 'app-my-drivers',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgxSonnerToaster],
   templateUrl: './my-drivers.html',
   styleUrl: './my-drivers.css'
 })
@@ -16,40 +23,37 @@ export class MyDrivers implements OnInit {
   unitForm!: FormGroup;
   currentConcessionaireId = '';
   selectedChofer: any;
+  driverss: Driver[] = [];
+  unidades: Vehicle[] = [];
 
-  // Lista de carros que ya existen en tu sistema
-  unidadesDisponibles: any[] = [
-    { id: 'v1', placa: 'ABC-123', modelo: 'Nissan Tsuru', economico: '01' },
-    { id: 'v2', placa: 'XYZ-987', modelo: 'Chevrolet Aveo', economico: '45' },
-    { id: 'v3', placa: 'MEX-444', modelo: 'VW Vento', economico: '12' }
-  ];
 
-  choferes: any[] = [
-    // Ejemplo 1: Sin unidad
-    { id: 1, licenseNumber: 'TR-1234567', licenseExpiry: '2028-12-31', status: 'Pendiente', vehiculo: null },
-    // Ejemplo 2: Ya tiene unidad enlazada
-    { 
-      id: 2, 
-      licenseNumber: 'TR-8889900', 
-      licenseExpiry: '2029-05-20', 
-      status: 'Activo', 
-      vehiculo: { id: 'v2', placa: 'XYZ-987', modelo: 'Chevrolet Aveo', economico: '45' } 
-    }
-  ];
-
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private vehiclesService: Vehiclesservice, private cdr: ChangeDetectorRef) {
     this.initForms();
   }
 
+  getMyDriver() {
+    this.vehiclesService.getDriver(this.currentConcessionaireId).subscribe({
+      next: (res) => {
+        this.driverss = res;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    }
+    );
+  }
+
   ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    this.currentConcessionaireId = user.concessionaireId || 'CON-001';
+    const user = JSON.parse(localStorage.getItem(environment.storageNames.user)!)
+    this.currentConcessionaireId = user.concessionaireId;
     this.licenseForm.patchValue({ concessionaireId: this.currentConcessionaireId });
+    this.getMyDriver();
+    this.loadVehicles();
   }
 
   initForms() {
     this.licenseForm = this.fb.group({
-      id: [null],
       concessionaireId: [''],
       licenseNumber: ['', Validators.required],
       licenseExpiry: ['', Validators.required]
@@ -57,39 +61,93 @@ export class MyDrivers implements OnInit {
 
     // El formulario de unidad ahora solo pide el ID del vehículo seleccionado
     this.unitForm = this.fb.group({
-      vehiculoId: ['', Validators.required]
+      vehicleId: ['', Validators.required],
     });
   }
 
-  openAddModal() { 
-    this.licenseForm.reset({ concessionaireId: this.currentConcessionaireId }); 
-    this.showModal = true; 
+  openAddModal() {
+    this.licenseForm.reset({ concessionaireId: this.currentConcessionaireId });
+    this.showModal = true;
   }
   closeModal() { this.showModal = false; }
-  
-  openUnitModal(chofer: any) { 
-    this.selectedChofer = chofer; 
-    this.unitForm.reset({
-      vehiculoId: chofer.vehiculo ? chofer.vehiculo.id : ''
-    });
-    this.showUnitModal = true; 
+
+  openUnitModal(chofer: Driver) {
+    this.selectedChofer = chofer.id;
+    this.showUnitModal = true;
   }
   closeUnitModal() { this.showUnitModal = false; }
 
   onSaveUnit() {
-    if (this.unitForm.valid) {
-      const selectedId = this.unitForm.value.vehiculoId;
-      // Buscamos los datos completos del carro para guardarlos en el chofer
-      const vehiculoCompleto = this.unidadesDisponibles.find(v => v.id === selectedId);
-      
-      const index = this.choferes.findIndex(c => c.id === this.selectedChofer.id);
-      this.choferes[index].vehiculo = vehiculoCompleto;
-      
-      this.closeUnitModal();
+    if (this.unitForm.invalid) {
+     toast.error("Debe seleccionar una unidad")
     }
+     const payload: assings = {
+        vehicleId: this.unitForm.value.vehicleId,
+        driverId: this.selectedChofer
+      }
+      this.vehiclesService.assing(payload).subscribe({
+        next: (res) => {
+          toast.success('Unidad asignada correctamente', res);
+          this.loadVehicles(); // Al recargar, detectChanges se llamará automáticamente
+          this.closeUnitModal()
+        }, error: (err) => {
+          toast.error('Error al asignar la unidad');
+          console.error(err);
+        }
+      })
+    this.unitForm.reset();
+
   }
 
   editarChofer(chofer: any) { this.licenseForm.patchValue(chofer); this.showModal = true; }
-  eliminarChofer(id: number) { this.choferes = this.choferes.filter(c => c.id !== id); }
-  onSubmit() { if (this.licenseForm.valid) { this.closeModal(); } }
+  eliminarChofer(driverr: Driver) {
+    const id = driverr.id;
+    this.driverss = this.driverss.filter(c => c.id !== id);
+  }
+  onSubmit() {
+    if (this.licenseForm.valid) {
+      console.log(this.licenseForm.value);
+      this.vehiclesService.createDriver(this.licenseForm.value).subscribe({
+        next: (res) => {
+          console.log(res);
+          const { email, temporaryPassword } = res.credentials;
+          toast.success('Chofer registrado', {
+            description: `Email: ${email}\nPassword: ${temporaryPassword}`,
+            duration: Infinity, //INFINITUM CHINGEU SU
+            action: {
+              label: 'Copiar Password',
+              onClick: () => {
+                navigator.clipboard.writeText(temporaryPassword!);
+                toast.info('Contraseña copiada al portapapeles');
+              }
+            },
+          });
+          this.showModal = false;
+          this.licenseForm.reset({ concessionaireId: this.currentConcessionaireId });
+          this.getMyDriver();
+          this.closeModal();
+        },
+        error: (err) => {
+          console.error(err);
+          toast.error('Error al registrar el chofer');
+        }
+      });
+    }
+  }
+  loadVehicles() {
+    this.vehiclesService.getVehicles(this.currentConcessionaireId!).subscribe(
+      {
+        next: (res) => {
+          this.unidades = res;
+          console.log('Unidades cargadas:', this.unidades);
+          this.cdr.detectChanges(); 
+        },
+        error: (err) => {
+          toast.error('Error al cargar las unidades');
+          console.error(err);
+        }
+      }
+    );
+    console.log('Unidades cargadas:', this.unidades);
+  }
 }

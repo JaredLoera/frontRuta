@@ -1,3 +1,4 @@
+<ngx-sonner-toaster position="top-right" richColors closeButton />
 <div class="dashboard-container-fluid">
     <header class="action-bar-panel">
         <div class="titles">
@@ -10,50 +11,52 @@
     </header>
 
     <div class="sites-grid-panel">
-        <div class="site-card-panel" *ngFor="let chofer of choferes">
+        @for (driver of driverss; track $index) {
+        <div class="site-card-panel">
+
             <div class="card-header-panel">
                 <div class="icon-box-gold"><i class="fas fa-file-contract"></i></div>
                 <div class="site-info-header">
-                    <h3>Licencia: {{ chofer.licenseNumber }}</h3>
-                    <span class="badge-status" [class.active]="chofer.status.includes('Activo')">
-                        {{ chofer.status }}
+                    <h3>Licencia: {{ driver.licenseNumber }}</h3>
+                    <span class="badge-status" [class.active]="driver.isActive">
+                        {{ driver.isActive ? 'Activo' : 'Suspendido'}}
                     </span>
                 </div>
             </div>
 
             <div class="card-body-panel">
-                <p><i class="fas fa-calendar-alt gold-icon"></i> Vence: <strong>{{ chofer.licenseExpiry }}</strong></p>
-                <p><i class="fas fa-user-tie gold-icon"></i> Concesionaria ID: <small>{{ currentConcessionaireId }}</small></p>
-                
-                <div *ngIf="chofer.vehiculo" style="margin-top: 10px; border-top: 1px solid #444; padding-top: 0.5rem;">
-                    <p style="margin: 5px 0 0 0;">
-                        <i class="fas fa-car gold-icon"></i>
-                        {{ chofer.vehiculo.modelo }} ({{ chofer.vehiculo.placa }})
-                    </p>
-                    <p style="margin: 0; font-size: 0.8rem; color: #aaa;">Económico: #{{ chofer.vehiculo.economico }}</p>
-                </div>
+                <p><i class="fas fa-calendar-alt gold-icon"></i> Vence: <strong>{{ driver.licenseExpiry }}</strong></p>
+                <p><i class="fas fa-user-tie gold-icon"></i> Concesionaria ID: <small>{{ currentConcessionaireId
+                        }}</small></p>
+
+
 
                 <div class="card-stats-panel">
                     <span>Una vez registrado, el chofer podrá completar sus datos personales desde la App.</span>
                 </div>
             </div>
-
             <div class="card-actions-panel">
-                <button class="btn-panel-action" (click)="openUnitModal(chofer)">
+                <button class="btn-panel-action" (click)="openUnitModal(driver)">
                     <i class="fas fa-taxi"></i> Unidad
                 </button>
-                <button class="btn-panel-action" (click)="editarChofer(chofer)">
+                <button class="btn-panel-action" (click)="editarChofer(driver)">
                     <i class="fas fa-edit"></i> Editar
                 </button>
-                <button class="btn-panel-action delete" (click)="eliminarChofer(chofer.id)">
+                <button class="btn-panel-action delete" (click)="eliminarChofer(driver)">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </div>
-        </div>
-    </div>
 
-    <div class="modal-panel-overlay" *ngIf="showUnitModal" (click)="closeUnitModal()">
+
+
+
+        </div>
+        }
+    </div>
+    @if (showUnitModal) {
+    <div class="modal-panel-overlay" (click)="closeUnitModal()">
         <div class="modal-panel-content" (click)="$event.stopPropagation()">
+
             <div class="modal-panel-header">
                 <h3><i class="fas fa-taxi gold-icon"></i> Enlazar Unidad</h3>
                 <button class="close-panel-btn" (click)="closeUnitModal()">&times;</button>
@@ -62,12 +65,13 @@
                 <div class="form-grid-panel" style="grid-template-columns: 1fr;">
                     <div class="form-group-panel">
                         <label>Seleccionar Vehículo Disponible</label>
-                        <select formControlName="vehiculoId" 
-                                style="width: 100%; padding: 12px; border-radius: 8px; background: #222; color: white; border: 1px solid #444;">
+                        <select formControlName="vehicleId"
+                            style="width: 100%; padding: 12px; border-radius: 8px; background: #222; color: white; border: 1px solid #444;">
                             <option value="" disabled>-- Selecciona un auto --</option>
-                            <option *ngFor="let v of unidadesDisponibles" [value]="v.id">
-                                Eco: {{v.economico}} | {{v.placa}} - {{v.modelo}}
+                            @for (item of unidades; track $index) {
+                            <option [value]="item.id"> {{ item.brand }} - {{ item.model }} - {{ item.licensePlate }}
                             </option>
+                            }
                         </select>
                     </div>
                 </div>
@@ -78,36 +82,42 @@
             </form>
         </div>
     </div>
+    }
 
-    <div class="modal-panel-overlay" *ngIf="showModal" (click)="closeModal()">
-        <div class="modal-panel-content" (click)="$event.stopPropagation()">
-            <div class="modal-panel-header">
-                <h3>
-                    <i class="fas fa-id-card gold-icon"></i>
-                    {{ licenseForm.get('id')?.value ? 'Modificar' : 'Registrar Nueva' }} Licencia
-                </h3>
-                <button class="close-panel-btn" (click)="closeModal()">&times;</button>
-            </div>
-            <form [formGroup]="licenseForm" (ngSubmit)="onSubmit()">
-                <div class="form-grid-panel" style="grid-template-columns: 1fr;">
-                    <div class="form-group-panel">
-                        <label>ID de Concesionaria (Automático)</label>
-                        <input formControlName="concessionaireId" readonly style="background: #f0f0f0;">
-                    </div>
-                    <div class="form-group-panel">
-                        <label>Número de Licencia</label>
-                        <input formControlName="licenseNumber" placeholder="Ej. TR-1234567">
-                    </div>
-                    <div class="form-group-panel">
-                        <label>Fecha de Expiración</label>
-                        <input formControlName="licenseExpiry" type="date">
-                    </div>
-                </div>
-                <div class="modal-panel-actions">
-                    <button type="button" class="btn-modal-cancel" (click)="closeModal()">Cancelar</button>
-                    <button type="submit" class="btn-modal-save" [disabled]="licenseForm.invalid">Guardar</button>
-                </div>
-            </form>
+
+
+</div>
+@if (showModal) {
+
+<div class="modal-panel-overlay" (click)="closeModal()">
+    <div class="modal-panel-content" (click)="$event.stopPropagation()">
+        <div class="modal-panel-header">
+            <h3>
+                <i class="fas fa-id-card gold-icon"></i>
+                {{ licenseForm.get('id')?.value ? 'Modificar' : 'Registrar Nueva' }} Licencia
+            </h3>
+            <button class="close-panel-btn" (click)="closeModal()">&times;</button>
         </div>
+        <form [formGroup]="licenseForm" (ngSubmit)="onSubmit()">
+            <div class="form-grid-panel" style="grid-template-columns: 1fr;">
+                <div class="form-group-panel">
+                    <label>ID de Concesionaria (Automático)</label>
+                    <input formControlName="concessionaireId" readonly style="background: #232222;">
+                </div>
+                <div class="form-group-panel">
+                    <label>Número de Licencia</label>
+                    <input formControlName="licenseNumber" placeholder="Ej. TR-1234567">
+                </div>
+                <div class="form-group-panel">
+                    <label>Fecha de Expiración</label>
+                    <input formControlName="licenseExpiry" type="date">
+                </div>
+            </div>
+            <div class="modal-panel-actions">
+                <button type="button" class="btn-modal-cancel" (click)="closeModal()">Cancelar</button>
+                <button type="submit" class="btn-modal-save" [disabled]="licenseForm.invalid">Guardar</button>
+            </div>
+        </form>
     </div>
 </div>
+}
