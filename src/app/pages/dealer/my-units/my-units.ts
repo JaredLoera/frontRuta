@@ -38,7 +38,7 @@ export class MyUnits {
     this.user = JSON.parse(localStorage.getItem(environment.storageNames.user) || 'null');
     this.initForm();
     this.loadInitialData();
-
+    console.log( this.user?.concessionaireId!)
  
     this.unidadForm.get('brandId')?.valueChanges.subscribe(selectedBrandId => {
       if (selectedBrandId) {

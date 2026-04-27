@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-       apiUrl: 'http://localhost:3000/api/',
+       apiUrl: 'https://hinojosadevs.online/api/api/',
     storageNames: {
         token: 'auth_token',
         user: 'auth_user',

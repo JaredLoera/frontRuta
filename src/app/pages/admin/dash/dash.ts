@@ -54,6 +54,9 @@ export class Dash implements OnInit {
       },
       error: (co: any) => {
         console.error();
+             this.authService.logout();
+        // Redirige al login después de cerrar sesión
+        window.location.href = '';
       }
     })
 

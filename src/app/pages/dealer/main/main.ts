@@ -10,6 +10,7 @@ import { Auth } from '../../../core/services/auth/auth';
 import { Profile } from '../../../core/interfaces/profile.interface';
 import { HostListener, ElementRef } from '@angular/core';
 import { User as UserService } from '../../../core/services/user/user';
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-main',
   imports: [RouterLink],
@@ -33,6 +34,7 @@ export class Main {
   ngOnInit() {
     this.user = this.authService.getUserFromStorage();
     this.profile = this.authService.getProfileFromStorage();
+    console.log(this.authService.getToken())
   }
 
   isUserMenuOpen = false;
@@ -57,6 +59,9 @@ export class Main {
       },
       error: (co: any) => {
         console.error();
+        this.authService.logout();
+        // Redirige al login después de cerrar sesión
+        window.location.href = '';
       }
     })
   }
