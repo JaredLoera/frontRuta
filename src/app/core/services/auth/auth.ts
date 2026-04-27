@@ -26,8 +26,13 @@ export class Auth {
   getToken(): string | null {
     return localStorage.getItem(this.token);
   }
+  closeSession(): any {
+    return this.http.post<any>(`${this.apiUrl}auth/logout`, {})
+  }
   logout(): void {
     localStorage.removeItem(this.token);
+    localStorage.removeItem(environment.storageNames.user);
+    localStorage.removeItem(environment.storageNames.profile);
   }
   setUser(user: User): void {
     localStorage.setItem(environment.storageNames.user, JSON.stringify(user));

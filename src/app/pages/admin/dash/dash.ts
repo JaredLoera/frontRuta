@@ -16,12 +16,12 @@ import { Response } from '../../../core/interfaces/response.interface';
   styleUrl: './dash.css',
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
 })
-export class Dash  implements OnInit {
+export class Dash implements OnInit {
 
   user: User | null = null;
   profile: Profile | null = null;
 
-  constructor(private authService: Auth,private eRef: ElementRef, private userService: UserService) {}
+  constructor(private authService: Auth, private eRef: ElementRef, private userService: UserService) { }
 
   ngOnInit() {
     this.user = this.authService.getUserFromStorage();
@@ -29,7 +29,7 @@ export class Dash  implements OnInit {
     this.loadDealerships();
   }
   loadDealerships() {
- 
+
   }
   // ... tus otras variables
   isUserMenuOpen = false;
@@ -46,8 +46,16 @@ export class Dash  implements OnInit {
     }
   }
   logout() {
-    this.authService.logout();
-    // Redirige al login después de cerrar sesión
-    window.location.href = '';
+    this.authService.closeSession().subscribe({
+      next: (co: any) => {
+        this.authService.logout();
+        // Redirige al login después de cerrar sesión
+        window.location.href = '';
+      },
+      error: (co: any) => {
+        console.error();
+      }
+    })
+
   }
 }

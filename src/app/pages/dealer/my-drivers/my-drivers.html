@@ -37,12 +37,12 @@
             </div>
             <div class="card-actions-panel">
                 <button class="btn-panel-action" (click)="openUnitModal(driver)">
-                    <i class="fas fa-taxi"></i> Unidad
+                    <i class="fas fa-taxi"></i> Enlazar Unidad
                 </button>
-                <button class="btn-panel-action" (click)="editarChofer(driver)">
+                <button class="btn-panel-action" (click)="editarChofer(driver)" disabled>
                     <i class="fas fa-edit"></i> Editar
                 </button>
-                <button class="btn-panel-action delete" (click)="eliminarChofer(driver)">
+                <button class="btn-panel-action delete" (click)="eliminarChofer(driver)" disabled>
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </div>

@@ -49,9 +49,16 @@ export class Main {
     }
   }
   logout() {
-    this.authService.logout();
-    // Redirige al login después de cerrar sesión
-    window.location.href = '';
+    this.authService.closeSession().subscribe({
+      next: (co: any) => {
+        this.authService.logout();
+        // Redirige al login después de cerrar sesión
+        window.location.href = '';
+      },
+      error: (co: any) => {
+        console.error();
+      }
+    })
   }
 
   private map: any;
