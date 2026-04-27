@@ -14,6 +14,8 @@ export class Auth {
   private apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
+  unautorized(){}
+
   login(email: string, password: string): Observable<Token> {
     return this.http.post<Token>(`${this.apiUrl}auth/signin`, {
       email,
