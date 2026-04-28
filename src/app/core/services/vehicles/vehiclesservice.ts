@@ -8,6 +8,7 @@ import { Vehicle } from '../../interfaces/vehicle.interface';
 import { Driver } from '../../interfaces/drivers.interface';
 import { Response } from '../../interfaces/response.interface';
 import { assings } from '../../interfaces/assing.interface';
+import { unassign } from '../../interfaces/unassign.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -43,8 +44,8 @@ export class Vehiclesservice {
     return this.http.post(`${this.apiUrl}vehicles/assign`, assing);
 
   }
-  unassign(vehicleId: string, driverId: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}vehicles/unassign`, { vehicleId, driverId });
+  unassign(unassign: unassign): Observable<any> {
+    return this.http.put(`${this.apiUrl}vehicles/unassign`, unassign);
   }
 
 }

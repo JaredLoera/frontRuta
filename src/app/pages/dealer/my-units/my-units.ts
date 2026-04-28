@@ -11,6 +11,7 @@ import { Vehicle } from '../../../core/interfaces/vehicle.interface';
 import { Vehiclesservice } from '../../../core/services/vehicles/vehiclesservice';
 import { toast, NgxSonnerToaster } from 'ngx-sonner';
 import { User } from '../../../core/interfaces/user.interface';
+import { unassign } from '../../../core/interfaces/unassign.interface';
 
 @Component({
   selector: 'app-my-units',
@@ -36,24 +37,25 @@ export class MyUnits {
   ) { }
 
   onUnassign(unidad: Vehicle) {
-  const vehicleId = unidad.id;
-  const driverId = unidad.assignedTo;
+  const vehicleId = unidad.id as string; // Aseguramos que no es undefined
+  const driverId = unidad.assignedTo as string; // Aseguramos que no es undefined
+  const unassignData: unassign = { vehicleId, driverId };
 
-  console.log("DAOTS ",{vehicleId, driverId})
+  console.log("DAOTS ", unassignData)
 
   if (!vehicleId || !driverId) {
     toast.error('No se pudo identificar la asignación');
     return;
   }
 
-  this.vehiclesService.unassign(vehicleId, driverId).subscribe({
+  this.vehiclesService.unassign(unassignData).subscribe({
     next: () => {
       toast.success('Unidad desasignada con éxito');
       this.loadVehicles();
     },
     error: (err) => {
       console.error(err);
-      toast.error('Error al desasignar la unidad');
+      toast.error('El conductor ya se encuentra con un vehículo asignado');
     }
   });
 }
