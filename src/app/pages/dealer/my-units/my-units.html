@@ -26,88 +26,96 @@
                 <div class="info-row">
                     <span><i class="fas fa-palette gold-text"></i> {{ unidad.color }}</span>
                 </div>
-
+                @if (unidad.isAssigned) {
+                <button class="btn-unassign"
+                    style="margin-top: 10px; background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; width: 100%;"
+                    (click)="onUnassign(unidad)">
+                    <i class="fas fa-user-minus"></i> DESASIGNAR
+                </button>
+                }
             </div>
         </div>
         }
     </div>
-@if (showModal) {
-<div class="modal-backdrop" (click)="closeModal()">
-    <div class="modal-box-large" (click)="$event.stopPropagation()">
-        <header class="modal-header-panel">
-            <h2 class="text-white">
-                <i class="fas fa-taxi gold-text"></i>
-                Registrar Nueva Unidad
-            </h2>
-            <button class="close-x" (click)="closeModal()">&times;</button>
-        </header>
+    @if (showModal) {
+    <div class="modal-backdrop" (click)="closeModal()">
+        <div class="modal-box-large" (click)="$event.stopPropagation()">
+            <header class="modal-header-panel">
+                <h2 class="text-white">
+                    <i class="fas fa-taxi gold-text"></i>
+                    Registrar Nueva Unidad
+                </h2>
+                <button class="close-x" (click)="closeModal()">&times;</button>
+            </header>
 
-        <form [formGroup]="unidadForm" (ngSubmit)="onSubmit()" class="unit-form">
-            
-            <div class="form-scroll-area">
-                <h4 class="section-title">Datos Principales</h4>
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>Placas / Matrícula</label>
-                        <input type="text" formControlName="licensePlate" placeholder="Ej. GBF-45-A" style="text-transform: uppercase;">
-                    </div>
-                    
-                    <div class="input-group checkbox-group">
-                        <label>Estado Especial</label>
-                        <label class="toggle-container">
-                            <input type="checkbox" formControlName="specialAttention">
-                            <span class="toggle-text text-white">Atención Especial</span>
-                        </label>
-                    </div>
-                </div>
+            <form [formGroup]="unidadForm" (ngSubmit)="onSubmit()" class="unit-form">
 
-                <h4 class="section-title">Detalles del Vehículo</h4>
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>Marca</label>
-                        <select formControlName="brandId">
-                            <option value="">Seleccione una marca...</option>
-                            @for (brand of brands; track brand.id) {
+                <div class="form-scroll-area">
+                    <h4 class="section-title">Datos Principales</h4>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Placas / Matrícula</label>
+                            <input type="text" formControlName="licensePlate" placeholder="Ej. GBF-45-A"
+                                style="text-transform: uppercase;">
+                        </div>
+
+                        <div class="input-group checkbox-group">
+                            <label>Estado Especial</label>
+                            <label class="toggle-container">
+                                <input type="checkbox" formControlName="specialAttention">
+                                <span class="toggle-text text-white">Atención Especial</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <h4 class="section-title">Detalles del Vehículo</h4>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Marca</label>
+                            <select formControlName="brandId">
+                                <option value="">Seleccione una marca...</option>
+                                @for (brand of brands; track brand.id) {
                                 <option [value]="brand.id">{{ brand.name }}</option>
-                            }
-                        </select>
-                    </div>
+                                }
+                            </select>
+                        </div>
 
-                    <div class="input-group">
-                        <label>Modelo</label>
-                        <select formControlName="modelId">
-                            <option value="">Seleccione un modelo...</option>
-                            @for (model of filteredModels; track model.id) {
+                        <div class="input-group">
+                            <label>Modelo</label>
+                            <select formControlName="modelId">
+                                <option value="">Seleccione un modelo...</option>
+                                @for (model of filteredModels; track model.id) {
                                 <option [value]="model.id">{{ model.name }}</option>
-                            }
-                        </select>
-                        @if (unidadForm.get('modelId')?.disabled) {
+                                }
+                            </select>
+                            @if (unidadForm.get('modelId')?.disabled) {
                             <small style="color: #888;">* Selecciona una marca primero</small>
-                        }
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>Año</label>
-                        <input type="number" formControlName="year" placeholder="2024">
+                            }
+                        </div>
                     </div>
 
-                    <div class="input-group">
-                        <label>Color de la Unidad</label>
-                        <div class="color-picker-wrapper">
-                            <input type="color" formControlName="color" class="color-input">
-                            <span class="text-white">{{ unidadForm.get('color')?.value | uppercase }}</span>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Año</label>
+                            <input type="number" formControlName="year" placeholder="2024">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Color de la Unidad</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" formControlName="color" class="color-input">
+                                <span class="text-white">{{ unidadForm.get('color')?.value | uppercase }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div> <footer class="form-buttons">
-                <button type="button" class="btn-cancel" (click)="closeModal()">Cancelar</button>
-                <button type="submit" class="btn-gold" [disabled]="unidadForm.invalid">
-                    <i class="fas fa-save"></i> Registrar
-                </button>
-            </footer>
-        </form>
+                <footer class="form-buttons">
+                    <button type="button" class="btn-cancel" (click)="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn-gold" [disabled]="unidadForm.invalid">
+                        <i class="fas fa-save"></i> Registrar
+                    </button>
+                </footer>
+            </form>
+        </div>
     </div>
-</div>
-}
+    }

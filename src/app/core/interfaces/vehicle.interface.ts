@@ -9,4 +9,6 @@ export interface Vehicle {
     imagen?:          string;
     model?:           string;
     brand?:           string;
+    isAssigned?:        boolean;
+    assignedTo?: string; 
 }

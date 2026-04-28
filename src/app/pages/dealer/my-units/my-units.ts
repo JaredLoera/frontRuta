@@ -34,6 +34,30 @@ export class MyUnits {
   constructor(private fb: FormBuilder, private vehiclesService: Vehiclesservice,
     private cdr: ChangeDetectorRef // <-- 2. Inyectar ChangeDetectorRef
   ) { }
+
+  onUnassign(unidad: Vehicle) {
+  const vehicleId = unidad.id;
+  const driverId = unidad.assignedTo;
+
+  console.log("DAOTS ",{vehicleId, driverId})
+
+  if (!vehicleId || !driverId) {
+    toast.error('No se pudo identificar la asignación');
+    return;
+  }
+
+  this.vehiclesService.unassign(vehicleId, driverId).subscribe({
+    next: () => {
+      toast.success('Unidad desasignada con éxito');
+      this.loadVehicles();
+    },
+    error: (err) => {
+      console.error(err);
+      toast.error('Error al desasignar la unidad');
+    }
+  });
+}
+
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem(environment.storageNames.user) || 'null');
     this.initForm();

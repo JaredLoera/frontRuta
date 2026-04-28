@@ -33,16 +33,18 @@ export class Vehiclesservice {
   createVehicle(vehicle: Vehicle): Observable<Vehicle> {
     return this.http.post<Vehicle>(`${this.apiUrl}vehicles`, vehicle);
   }
-  createDriver(driver:Driver):Observable<Response>{
-     return this.http.post<Response>(`${this.apiUrl}drivers`, driver);
+  createDriver(driver: Driver): Observable<Response> {
+    return this.http.post<Response>(`${this.apiUrl}drivers`, driver);
   }
-  getDriver(id:string):Observable<Driver[]>{
+  getDriver(id: string): Observable<Driver[]> {
     return this.http.get<Driver[]>(`${this.apiUrl}drivers?concessionaireId=${id}`);
   }
-  assing(assing:assings){
+  assing(assing: assings) {
     return this.http.post(`${this.apiUrl}vehicles/assign`, assing);
 
   }
-
+  unassign(vehicleId: string, driverId: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}vehicles/unassign`, { vehicleId, driverId });
+  }
 
 }
