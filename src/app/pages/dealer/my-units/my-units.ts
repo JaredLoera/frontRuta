@@ -55,7 +55,7 @@ export class MyUnits {
     },
     error: (err) => {
       console.error(err);
-      toast.error('El conductor ya se encuentra con un vehículo asignado');
+      toast.error('error al desasignar la unidad');
     }
   });
 }

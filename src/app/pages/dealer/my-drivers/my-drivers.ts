@@ -91,7 +91,7 @@ export class MyDrivers implements OnInit {
           this.loadVehicles(); // Al recargar, detectChanges se llamará automáticamente
           this.closeUnitModal()
         }, error: (err) => {
-          toast.error('Error al asignar la unidad');
+          toast.error('El conductor ya se encuentra con un vehículo asignado');
           console.error(err);
         }
       })
