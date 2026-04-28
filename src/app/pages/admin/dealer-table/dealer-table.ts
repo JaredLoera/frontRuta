@@ -98,7 +98,7 @@ export class DealerTable implements OnInit {
           const password = res.temporaryPassword;
 
           toast.success('¡Registro Exitoso!', {
-            description: `Acceso creado para ${res.name}. Usuario: ${email}`,
+            description: `Acceso creado para el Usuario: ${email}`,
             duration: Infinity,
             action: {
               label: 'Copiar Pass',
